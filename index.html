@@ -4,11 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Amphetamine Withdrawal Assessment Tool</title>
-    <!-- Web App Capabilities (PWA) -->
+    
+    <!-- Web App Capabilities (PWA for iOS & Android) -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Amphetamine Assessment">
     <meta name="theme-color" content="#4f46e5">
+
+    <!-- App Icons for iOS & Standard Browsers -->
     <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3063/3063822.png">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/3063/3063822.png">
 
     <!-- Tailwind CSS & Icons -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -16,8 +21,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
     <style>
-        /* Touch friendly optimizations */
-        -webkit-tap-highlight-color: transparent;
+        /* Touch friendly optimizations for iOS */
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
         body {
             user-select: none;
             -webkit-user-select: none;
@@ -28,7 +35,7 @@
         }
     </style>
 </head>
-<body class="bg-slate-100 font-sans text-slate-800 min-h-screen pb-24 pt- safe-top">
+<body class="bg-slate-100 font-sans text-slate-800 min-h-screen pb-24">
 
     <!-- Header App Bar -->
     <header class="bg-indigo-600 text-white shadow-md sticky top-0 z-40 px-4 py-3 flex justify-between items-center">
@@ -334,18 +341,6 @@
 
         function closeQRModal() {
             document.getElementById('qr-modal').classList.add('hidden');
-        }
-
-        // Register Service Worker for Offline Mode
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                const swCode = `
-                    self.addEventListener('install', e => e.waitUntil(caches.open('app-v1').then(c => c.addAll(['./']))));
-                    self.addEventListener('fetch', e => e.respondWith(caches.match(e.request).then(r => r || fetch(e.request))));
-                `;
-                const blob = new Blob([swCode], { type: 'application/javascript' });
-                navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
-            });
         }
 
         renderForm();
